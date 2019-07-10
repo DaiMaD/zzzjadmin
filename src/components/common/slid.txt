@@ -1,0 +1,40 @@
+//新加数据中心
+//					{
+//						icon: 'el-icon-service',
+//						index: '/home',
+//						title: '数据中心'
+//					},
+					//内容管理：合并上课、商学院、fm、大讲堂、读书、今日速递、热门搜索、标签管理、活动管理、推广管理、订单管理、用户管理、推送，新增媒体库
+					{
+						icon: 'el-icon-news',
+						index: '/home2',
+						title: '内容管理'
+					},
+					//分销管理
+					{
+						icon: 'el-icon-phone',
+						index: '/home3',
+						title: '分销管理'
+					},
+					{
+						icon: 'el-icon-edit',
+						index: '/home4',
+						title: '考试管理',
+					},
+					//订单管理
+					{
+						icon: 'el-icon-star-on',
+						index: '/home5',
+						title: '订单管理'
+					},
+					//用户管理
+					{
+						icon: 'el-icon-rank',
+						index: '/home6',
+						title: '用户管理'
+					},
+					{
+						icon: 'el-icon-warning',
+						index: '/home7',
+						title: '系统管理'
+					}
