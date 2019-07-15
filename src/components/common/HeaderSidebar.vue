@@ -151,7 +151,7 @@
 				var roleDom = document.getElementsByClassName('defaultMenu2')
 				setTimeout(function () {
 					for (let j = roleDom.length - 1; j >= 0; j--) {
-						// roleDom[j].remove();
+						roleDom[j].remove();
 					}
 				}, 300);
 			}
