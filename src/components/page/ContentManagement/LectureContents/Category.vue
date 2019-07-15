@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="handle-box">
 				<el-button type="primary" icon="delete" class="handle-del mr10" @click="batchDelete">批量删除</el-button>
-				<el-input size="medium" v-model="select_cate" placeholder="请输入查询ID" class="handle-select mr10" clearable>
+				<el-input size="medium" v-model="select_cate" placeholder="请输入关键词查询" class="handle-select mr10" clearable>
 				</el-input>
 				<el-button type="primary" icon="search" @click="search">搜索</el-button>
 				<div class="addbtn">
@@ -300,14 +300,25 @@
 			//搜索
 			search() {
 				if (this.select_cate !== '') {
-					getCategoryOne(parseInt(this.select_cate)).then(res => {
-						if (res.data == null) {
-							this.list = null
-						} else {
-							this.list = JSON.parse(JSON.stringify(this.del_list));
-							this.list.splice(0, this.list.length, res.data)
-						}
-					});
+					// getCategoryOne(parseInt(this.select_cate)).then(res => {
+					// 	if (res.data == null) {
+					// 		this.list = null
+					// 	} else {
+					// 		this.list = JSON.parse(JSON.stringify(this.del_list));
+					// 		this.list.splice(0, this.list.length, res.data)
+					// 	}
+					// });
+					getCategories(1, 1000).then(res => {
+						var searchData = this.select_cate;
+						var tableData = res.data.data;
+						let resultData = tableData.filter(data => {
+							//日期假设date,人名 name
+							if (data.name == searchData || data.name.indexOf(searchData) != -1) { //此处根据具体需求判断
+								return true;
+							}
+						});
+						this.list = resultData;
+					})
 				} else {
 					this.list = JSON.parse(JSON.stringify(this.del_list))
 				}

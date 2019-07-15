@@ -3,29 +3,28 @@
     <!---------------->
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary"  icon="delete" class="handle-del mr10" @click="batchDelete">批量删除</el-button>
-        <el-input size="medium" v-model="select_cate" placeholder="请输入查询ID"  class="handle-select mr10" clearable>
+        <el-button type="primary" icon="delete" class="handle-del mr10" @click="batchDelete">批量删除</el-button>
+        <el-input size="medium" v-model="select_cate" placeholder="请输入关键字查询" class="handle-select mr10" clearable>
         </el-input>
         <el-button type="primary" icon="search" @click="search">搜索</el-button>
         <div class="addbtn">
-        		<el-tooltip class="item" effect="dark" content="点击键盘“K”键即可进行“新增”操作" placement="left" >
-			      <i class="el-icon-info addbtn2"></i>
-			    </el-tooltip>
-	        <el-button type="primary" icon="add" @click="handleAdd" class="">新增</el-button>
+          <el-tooltip class="item" effect="dark" content="点击键盘“K”键即可进行“新增”操作" placement="left">
+            <i class="el-icon-info addbtn2"></i>
+          </el-tooltip>
+          <el-button type="primary" icon="add" @click="handleAdd" class="">新增</el-button>
         </div>
       </div>
-      <el-table :data="list" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" :header-cell-style="{color:'#000',font_weight:800,background:'#f6f6f6'}">
+      <el-table :data="list" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange"
+        :header-cell-style="{color:'#000',font_weight:800,background:'#f6f6f6'}">
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id"  label="ID" min-width="80"></el-table-column>
+        <el-table-column prop="id" label="ID" min-width="80"></el-table-column>
         <el-table-column prop="name" label="名称" min-width="150"></el-table-column>
         <el-table-column prop="type" label="分类类型" :formatter="formatType">
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
-            <el-button size="small"
-                       @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="small" type="danger"
-                       @click="myDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="small" type="danger" @click="myDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -33,14 +32,9 @@
 
       <!-- -------分页------------- -->
       <div class="pagination">
-        <el-pagination
-          background
-	        	@size-change="handleSizeChange"
-		      @current-change="handleCurrentChange"
-		      :page-sizes="[10, 20, 30, 40]"
-		      :page-size="10"
-		      layout="total, sizes, prev, pager, next, jumper"
-		      :total="this.total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+          :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="total, sizes, prev, pager, next, jumper"
+          :total="this.total">
         </el-pagination>
       </div>
     </div>
@@ -54,18 +48,14 @@
           <i class="iconfont icon-msnui-close-fat" @click="addFormVisible = false"></i>
         </div>
         <div class="categories-news-content">
-          <el-form  :model="addForm" :rules="addFormRules" ref="addForm" label-position="left" label-width="80px">
-            <el-form-item   label="名 称:" prop="name">
-              <el-input  v-model="addForm.name"></el-input>
+          <el-form :model="addForm" :rules="addFormRules" ref="addForm" label-position="left" label-width="80px">
+            <el-form-item label="名 称:" prop="name">
+              <el-input v-model="addForm.name"></el-input>
             </el-form-item>
 
             <el-form-item label="分类状态:" prop="status">
               <el-select v-model="addForm.status">
-                <el-option
-                  v-for="item in statusOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -93,7 +83,7 @@
   </div>
 </template>
 <script>
-  import {postcategoryu,getCategoryOne,postsxy,putCategories,postCategoriesList,postsxylist,deletesxycatelog} from '../../../../api/api';
+  import { postcategoryu, getCategoryOne, postsxy, putCategories, postCategoriesList, postsxylist, deletesxycatelog } from '../../../../api/api';
   export default {
     data() {
       var validateName = (rule, value, callback) => {
@@ -116,13 +106,13 @@
         //名称不能为空
         addFormRules: {
           name: [
-            {required: true, message: '名称字段不能为空'},
-            {validator: validateName, trigger: 'blur'}
+            { required: true, message: '名称字段不能为空' },
+            { validator: validateName, trigger: 'blur' }
           ]
         },
         //新增界面数据
         addForm: {
-          id:0,
+          id: 0,
           name: '',
           status: 0
         },
@@ -156,15 +146,15 @@
     created() {
       this.getData();
       var _this = this;
-    		document.onkeydown = function(event) {
-    			var e = window.event || arguments.callee.caller.arguments[0];
+      document.onkeydown = function (event) {
+        var e = window.event || arguments.callee.caller.arguments[0];
         if (e.keyCode == 75) {
-            _this.addKey();
+          _this.addKey();
         }
-        if(e.keyCode == 27) {
-            _this.closeKey();
+        if (e.keyCode == 27) {
+          _this.closeKey();
         }
-    		};
+      };
     },
 
     computed: {
@@ -173,13 +163,13 @@
 
     methods: {
       addKey() {
-				this.isEditForm = false;
-				this.handleAdd();
-				this.addFormVisible = true;
-			},
-	  		closeKey(){
-	  			this.addFormVisible = false;
-	  		},
+        this.isEditForm = false;
+        this.handleAdd();
+        this.addFormVisible = true;
+      },
+      closeKey() {
+        this.addFormVisible = false;
+      },
 
       formatStatus: function (row, column, cellValue) {
         if (cellValue === 0) {
@@ -203,7 +193,7 @@
           case 3:
             return 'FM';
             break;
-          default :
+          default:
             return '暂无此类型'
         }
       },
@@ -224,8 +214,8 @@
           } else {
             this.list = res.data.data;
             if (res.data.count) {
-                this.total = res.data.count
-              }
+              this.total = res.data.count
+            }
           }
 
         });
@@ -239,79 +229,90 @@
         this.cur_page = val;
         this.getData();
       },
-			handleSizeChange(val){
-      		this.size = val
-      		this.getData();
-      		document.getElementById("table").setAttribute("style","height: 1100px !important");
+      handleSizeChange(val) {
+        this.size = val
+        this.getData();
+        document.getElementById("table").setAttribute("style", "height: 1100px !important");
       },
 
       //搜索
-      search(){
-        if(this.select_cate!==''){
-          getCategoryOne(parseInt(this.select_cate)).then(res => {
-            if (res.data == null){
-              this.list = null
-            } else {
-              this.list=JSON.parse(JSON.stringify(this.del_list));
-              this.list.splice(0,this.list.length,res.data)
-            }
-          });
-        }else{
-          this.list=JSON.parse(JSON.stringify(this.del_list))
+      search() {
+        if (this.select_cate !== '') {
+          // getCategoryOne(parseInt(this.select_cate)).then(res => {
+          //   if (res.data == null){
+          //     this.list = null
+          //   } else {
+          //     this.list=JSON.parse(JSON.stringify(this.del_list));
+          //     this.list.splice(0,this.list.length,res.data)
+          //   }
+          // });
+          postsxylist(1, 1000).then(res => {
+            var searchData = this.select_cate;
+            var tableData = res.data.data;
+            let resultData = tableData.filter(data => {
+              //日期假设date,人名 name
+              if (data.name == searchData || data.name.indexOf(searchData) != -1) { //此处根据具体需求判断
+                return true;
+              }
+            });
+            this.list = resultData;
+          })
+        } else {
+          this.list = JSON.parse(JSON.stringify(this.del_list))
         }
 
       },
 
 
-//删除
-          myDelete(index,row){
-            // 新增删除提示
-            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-                      confirmButtonText: '确定',
-                      cancelButtonText: '取消',
-                      cancelButtonClass: "btn-custom-cancel",
-                      type: 'warning'
-                    }).then(() => {
+      //删除
+      myDelete(index, row) {
+        // 新增删除提示
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          cancelButtonClass: "btn-custom-cancel",
+          type: 'warning'
+        }).then(() => {
 
-deletesxycatelog(row.id).then((res) => {
+          deletesxycatelog(row.id).then((res) => {
 
-          if (res.success === true) {
-            this.select_cate='';
-            this.getData();
-          }
+            if (res.success === true) {
+              this.select_cate = '';
+              this.getData();
+            }
+          });
+
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
         });
-
-                      this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                      });
-                    }).catch(() => {
-                      this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                      });
-                  });
-          },
+      },
       //批量删除
-      batchDelete(){
+      batchDelete() {
         let str = '';
-        this.multipleSelection.forEach((selection,index) => {
+        this.multipleSelection.forEach((selection, index) => {
           str += `${selection.id},`
         });
-        if (str.endsWith(',')){
+        if (str.endsWith(',')) {
           str = str.slice(0, -1);
         }
 
-        postCategoriesList(str).then((res)=>{
-          if(res.success===true){
+        postCategoriesList(str).then((res) => {
+          if (res.success === true) {
             this.getData();
           }
         });
       },
 
       //点击选中被删除项
-      handleSelectionChange(val){
-        this.multipleSelection=val;
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
       },
 
 
@@ -320,10 +321,10 @@ deletesxycatelog(row.id).then((res) => {
 
       //新增弹框显示
       handleAdd() {
-        this.select_cate='';
+        this.select_cate = '';
         this.isEditForm = false;
         this.addForm = {
-          id:0,
+          id: 0,
           name: '',
           status: 0,
         };
@@ -348,21 +349,21 @@ deletesxycatelog(row.id).then((res) => {
       },
 
       //新增
-      myPostsxyAdd(){
+      myPostsxyAdd() {
         postsxy(this.addForm).then((res) => {
-          if (res.success === true){
+          if (res.success === true) {
 
-            this.addFormVisible=false;
+            this.addFormVisible = false;
             this.getData();
-          }else {
+          } else {
             this.$message({
-              message:res.data,
-              type : "error"
+              message: res.data,
+              type: "error"
             })
           }
-        }).catch((res)=>{
+        }).catch((res) => {
           this.$message({
-            message:res.data,
+            message: res.data,
             type: "error"
           })
 
@@ -371,28 +372,29 @@ deletesxycatelog(row.id).then((res) => {
 
 
       //编辑按钮点击
-      handleEdit(index,row){
+      handleEdit(index, row) {
         console.log(row.status);
         this.isEditForm = true;
         this.addForm = {
           id: row.id,
-          name:row.name,
-          status:row.status,
-          type:row.type
+          name: row.name,
+          status: row.status,
+          type: row.type
         };
-        this.addFormVisible=true;
+        this.addFormVisible = true;
       },
 
 
       //修改
-      myPutCategoryChange(){
-        postcategoryu(this.addForm,this.addForm.id).then((res)=>{
+      myPutCategoryChange() {
+        postcategoryu(this.addForm, this.addForm.id).then((res) => {
           console.log(res);
-          if (res.success==true){
-            this.addFormVisible=false;
+          if (res.success == true) {
+            this.addFormVisible = false;
             this.getData();
-          }else {
-            this.$message({message: res.data,
+          } else {
+            this.$message({
+              message: res.data,
               type: 'error'
             });
           }
@@ -404,11 +406,12 @@ deletesxycatelog(row.id).then((res) => {
   }
 
 </script>
-<style scoped >
-.handle-box{
-	height: 32px;
-}
-.handle-box .addbtn {
-	float: right;
-}
+<style scoped>
+  .handle-box {
+    height: 32px;
+  }
+
+  .handle-box .addbtn {
+    float: right;
+  }
 </style>

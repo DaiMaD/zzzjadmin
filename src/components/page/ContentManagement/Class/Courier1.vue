@@ -3,7 +3,7 @@
     <div class="container">
       <div class="handle-box">
         <el-button type="primary" icon="delete" class="handle-del mr10" @click="batchDelete">批量删除</el-button>
-        <el-input size="medium" v-model="select_cate" placeholder="请输入查询ID" class="handle-select mr10" clearable>
+        <el-input size="medium" v-model="select_cate" placeholder="请输入关键词查询" class="handle-select mr10" clearable>
         </el-input>
         <el-button type="primary" icon="search" @click="search">搜索</el-button>
         <div class="addbtn">
