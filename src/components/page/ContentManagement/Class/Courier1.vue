@@ -559,14 +559,25 @@
       //搜索
       search() {
         if (this.select_cate !== '') {
-          getCoursesOne(parseInt(this.select_cate)).then(res => {
-            if (res.data == null) {
-              this.list = null
-            } else {
-              this.list = JSON.parse(JSON.stringify(this.del_list));
-              this.list.splice(0, this.list.length, res.data)
-            }
-          });
+          // getCoursesOne(parseInt(this.select_cate)).then(res => {
+          //   if (res.data == null) {
+          //     this.list = null
+          //   } else {
+          //     this.list = JSON.parse(JSON.stringify(this.del_list));
+          //     this.list.splice(0, this.list.length, res.data)
+          //   }
+          // });
+          getjrsdCourse(1, 1000).then(res => {
+            var searchData = this.select_cate;
+            var tableData = res.data.data;
+            let resultData = tableData.filter(data => {
+              //日期假设date,人名 name
+              if (data.name == searchData || data.name.indexOf(searchData) != -1) { //此处根据具体需求判断
+                return true;
+              }
+            });
+            this.list = resultData;
+          })
         } else {
           this.list = JSON.parse(JSON.stringify(this.del_list))
         }
